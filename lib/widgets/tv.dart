@@ -40,7 +40,7 @@ class TV extends StatelessWidget {
                               builder: (context) => Description(
                                     //Todo: add ID
                                     type: "tv",
-                                    data: curr_tv['genre_ids'],
+                                    gerneIdData: curr_tv['genre_ids'],
                                     id: curr_tv['id'],
                                     name: curr_tv['name'],
                                     bannerurl:

@@ -117,7 +117,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                                     builder: (context) => Description(
                                           //Todo: add ID
                                           type: "movie",
-                                          data: movie['genre_ids'],
+                                          gerneIdData: movie['genre_ids'],
                                           id: movie['id'],
                                           name: movie['title'],
                                           bannerurl:

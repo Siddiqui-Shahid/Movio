@@ -127,7 +127,8 @@ class _CastedPersonDetailsScreenState extends State<CastedPersonDetailsScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Description(
-                                        data: indivisualStarMovie['genre_ids'],
+                                        gerneIdData:
+                                            indivisualStarMovie['genre_ids'],
                                         type: "movie",
                                         id: indivisualStarMovie['id'] ?? "",
                                         name:

@@ -70,7 +70,7 @@ class _SingleGenreState extends State<SingleGenre> {
                           builder: (context) => Description(
                                 //Todo: add ID
                                 type: "movie",
-                                data: movie['genre_ids'],
+                                gerneIdData: movie['genre_ids'],
                                 id: movie['id'],
                                 name: movie['title'],
                                 bannerurl: preImageUrl + movie['backdrop_path'],

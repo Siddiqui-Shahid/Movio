@@ -20,7 +20,7 @@ class Description extends StatefulWidget {
   final String name, description, bannerurl, posterurl, vote, launch_on, type;
   final int id;
   double previousOffset = 0;
-  final List<dynamic> data;
+  final List<dynamic> gerneIdData;
 
   Description({
     Key? key,
@@ -32,7 +32,7 @@ class Description extends StatefulWidget {
     required this.launch_on,
     required this.id,
     this.type = "movie",
-    required this.data,
+    required this.gerneIdData,
   }) : super(key: key);
 
   @override
@@ -314,7 +314,7 @@ class _DescriptionState extends State<Description> {
                         spacing: 8.0,
                         runSpacing: 8.0,
                         children: [
-                          for (dynamic genre in widget.data)
+                          for (dynamic genre in widget.gerneIdData)
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -547,7 +547,8 @@ class _DescriptionState extends State<Description> {
                                           builder: (context) => Description(
                                             //Todo: add ID
                                             type: "movie",
-                                            data: similarMovie['genre_ids'],
+                                            gerneIdData:
+                                                similarMovie['genre_ids'],
                                             id: similarMovie['id'],
                                             name: similarMovie['title'],
                                             bannerurl: preImageUrl +

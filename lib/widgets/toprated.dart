@@ -39,7 +39,7 @@ class TopRatedMovies extends StatelessWidget {
                               builder: (context) => Description(
                                     //Todo: add ID
                                     type: "movie",
-                                    data: top['genre_ids'],
+                                    gerneIdData: top['genre_ids'],
                                     id: top['id'],
                                     name: top['title'],
                                     bannerurl:

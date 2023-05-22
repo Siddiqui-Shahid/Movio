@@ -88,7 +88,7 @@ class _ExploreMoviesState extends State<ExploreMovies> {
                             builder: (context) => Description(
                                   //Todo: add ID
                                   type: "movie",
-                                  data: randomMovie['genre_ids'],
+                                  gerneIdData: randomMovie['genre_ids'],
                                   id: randomMovie['id'],
                                   name: randomMovie['title'],
                                   bannerurl:
@@ -103,7 +103,8 @@ class _ExploreMoviesState extends State<ExploreMovies> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.green, width: 3),
+                        border:
+                            Border.all(color: Colors.blue.shade100, width: 3),
                         borderRadius: BorderRadius.circular(10),
                         // border: BorderSide(color: Colors.green, width: 2),
                       ),
@@ -149,10 +150,10 @@ class _ExploreMoviesState extends State<ExploreMovies> {
                                       collapseText: '...show less',
                                       maxLines: 2,
                                       linkStyle: GoogleFonts.robotoCondensed(
-                                          color: Colors.green,
+                                          color: Colors.blue.shade100,
                                           fontWeight: FontWeight.bold),
                                       style: GoogleFonts.robotoCondensed(
-                                        color: Colors.green,
+                                        color: Colors.blue.shade100,
                                       ),
                                     ),
                                   ],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_login/constants.dart';
@@ -40,13 +42,14 @@ class _TrendingMoviesState extends State<TrendingMovies> {
                     } else {
                       return InkWell(
                         onTap: () {
+                          log(trend.toString());
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Description(
                                 //Todo: add ID
                                 type: "movie",
-                                data: trend['genre_ids'],
+                                gerneIdData: trend['genre_ids'],
                                 id: trend['id'],
                                 name: trend['title'],
                                 bannerurl: preImageUrl +

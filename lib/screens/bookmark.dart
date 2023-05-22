@@ -9,6 +9,7 @@ import 'package:google_login/utils/text.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import 'description.dart';
 
 class Bookmark extends StatefulWidget {
   const Bookmark({
@@ -30,9 +31,9 @@ class _BookmarkState extends State<Bookmark> {
     usersRef.get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) {
         bookmarkMovies.add(doc.data());
-        log(doc.data().toString());
-        log("bookmarkMovies.toString()");
-        log(bookmarkMovies.toString());
+        // log(doc.data().toString());
+        // log("bookmarkMovies.toString()");
+        // log(bookmarkMovies.toString());
       });
       setState(() {
         isLoading = false;
@@ -42,8 +43,8 @@ class _BookmarkState extends State<Bookmark> {
 Sample:-
 [{created: Timestamp(seconds=1682951909, nanoseconds=894000000), imageUrl: https://image.tmdb.org/t/p/w500/wDWwtvkRRlgTiUr6TyLSMX8FCuZ.jpg, description: Following the latest Ghostface killings, the four survivors leave Woodsboro behind and start a fresh chapter., id: 934433, title: Scream VI}, {created: Timestamp(seconds=1682951917, nanoseconds=896000000), imageUrl: https://image.tmdb.org/t/p/w500/bkPpmNSdbRIgtscqH86BQFLJXcz.jpg, description: On the eve of her 38th birthday, a woman desperately attempts to fix her broken biological clock., id: 1085103, title: Clock}, {created: Timestamp(seconds=1682951907, nanoseconds=144000000), imageUrl: https://image.tmdb.org/t/p/w500/9NXAlFEE7WDssbXSMgdacsUD58Y.jpg, description: Wendy Darling, a young girl afraid to leave her childhood home behind, meets Peter Pan, a boy who refuses to grow up. Alongside her brothers and a tiny fairy, Tinker Bell, she travels with Peter to the magical world of Neverland. There, she encounters an evil pirate captain, Captain Hook, and embarks on a thrilling adventure that will change her life forever., id: 420808, title: Peter Pan & Wendy}, {created: Timestamp(seconds=1682951912, nanoseconds=182000000), imageUrl: https://image.tmdb.org/t/p/w500/c0Zv7gNTH8LoRnHANhAHGWhGvJC.jpg, description: A steely special ops agent finds his morality put to the test when he infiltrates a crime syndicate and unexpectedly bonds with the boss' young son., id: 1102776, title: AKA}, {created: Timestamp(seconds=1682951922, nanoseconds=898000000), imageUrl: https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg, description: While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi., id: 502356, title: The Super Mario Bros. Movie}]
  */
-    log("bookmarkMovies.toString()");
-    log(bookmarkMovies.toString());
+    // log("bookmarkMovies.toString()");
+    // log(bookmarkMovies.toString());
   }
 
   Future<Map<String, dynamic>> fetchMovieData(String movieId) async {
@@ -61,7 +62,7 @@ Sample:-
   void initState() {
     // TODO: implement initState
     super.initState();
-    log("getDocs()");
+    // log("getDocs()");
     getDocs();
   }
 
@@ -87,29 +88,39 @@ Sample:-
                           // setState(() {
                           //   isLoading = true;
                           // });
+                          fetchMovieData(bookmarkMovie['id']).then((value) {
+                            try {
+                              log(value.toString());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Description(
+                                    //Todo: add ID
+                                    type: "movie",
+                                    id: value['id'],
+                                    name: value['title'],
+                                    bannerurl: preImageUrl +
+                                        value['backdrop_path'].toString(),
+                                    posterurl: preImageUrl +
+                                        value['poster_path'].toString(),
+                                    description: value['overview'],
+                                    vote: value['vote_average'].toString(),
+                                    launch_on: value['release_date'],
+                                    gerneIdData: [],
+                                  ),
+                                ),
+                              );
+                            } catch (ex) {
+                              log(ex.toString());
+                            }
+                          });
+
                           // fetchMovieData(bookmarkMovie['id']).then((data) {
                           //   try {
                           //     setState(() {
                           //       isLoading = false;
                           //     });
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => Description(
-                          //           //Todo: add ID
-                          //           type: "movie",
-                          //           id: data['id'],
-                          //           name: data['title'],
-                          //           bannerurl: preImageUrl +
-                          //               data['backdrop_path'].toString(),
-                          //           posterurl: preImageUrl +
-                          //               data['poster_path'].toString(),
-                          //           description: data['overview'],
-                          //           vote: data['vote_average'].toString(),
-                          //           launch_on: data['release_date'],
-                          //         ),
-                          //       ),
-                          //     );
+
                           //   } catch (e) {
                           //     log('Error navigating to new screen: $e');
                           //   }
