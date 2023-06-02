@@ -39,12 +39,13 @@ class _GenreListScreenState extends State<GenreListScreen> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.green,
+                                color: Colors.blue.shade100,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Center(
                               child: Text(
                                 allGenresList[index].name,
-                                style: const TextStyle(color: Colors.black),
+                                style:
+                                    TextStyle(color: Colors.blueGrey.shade900),
                               ),
                             ),
                           ),

@@ -27,9 +27,17 @@ class _ExploreMoviesState extends State<ExploreMovies> {
   Future<void> getRandomMovies() async {
     var url =
         'https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&sort_by=popularity.desc&page=$apiIndex&include_adult=false';
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+    if (cache.containsKey(url)) {
+      cache[url];
+    } else {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        cache[url] = response;
+      }
+    }
+
+    if (cache[url].statusCode == 200) {
+      var data = json.decode(cache[url].body);
       randomMovies.addAll(data['results']);
 
       // log("data['result'].toString()");
@@ -70,7 +78,7 @@ class _ExploreMoviesState extends State<ExploreMovies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey.shade900,
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : SizedBox(

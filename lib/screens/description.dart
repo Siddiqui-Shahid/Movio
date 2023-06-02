@@ -80,16 +80,36 @@ class _DescriptionState extends State<Description> {
     }
   }
 
+  void deleteMovie() async {
+    CollectionReference ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('movies');
+    ref
+        .where('id', isEqualTo: widget.id.toString().toLowerCase())
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((DocumentSnapshot doc) {
+        doc.reference.delete().then((value) {
+          log('Document deleted successfully');
+        }).catchError((error) {
+          log('Failed to delete document: $error');
+        });
+      });
+    });
+  }
+
   Future<void> hasMovieInBookmark() async {
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection('movies')
+        .where('id', isEqualTo: widget.id.toString().toLowerCase())
         .get();
-    // log("snapshot.toString()");
-    // log(snapshot.toString());
-    // log("snapshot.size.toString()");
-    // log(snapshot.size.toString());
+    log("snapshot.toString()");
+    log(snapshot.toString());
+    log("snapshot.size.toString()");
+    log(snapshot.size.toString());
     isBookmark = snapshot.size == 1;
     setState(() {
       isLoading = false;
@@ -162,7 +182,7 @@ class _DescriptionState extends State<Description> {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.withOpacity(0.5),
+            color: Colors.blue.shade100.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(0, 3), // changes position of shadow
@@ -172,11 +192,11 @@ class _DescriptionState extends State<Description> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Container(
-          color: Colors.black,
+          color: Colors.blueGrey.shade900,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             message,
-            style: TextStyle(color: Colors.green),
+            style: TextStyle(color: Colors.blue.shade100),
           ),
         ),
       ),
@@ -189,25 +209,6 @@ class _DescriptionState extends State<Description> {
       gravity: ToastGravity.BOTTOM,
       toastDuration: Duration(seconds: 2),
     );
-  }
-
-  void deleteMovie() async {
-    CollectionReference ref = FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection('movies');
-    ref
-        .where('id', isEqualTo: widget.id.toString().toLowerCase())
-        .get()
-        .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        doc.reference.delete().then((value) {
-          log('Document deleted successfully');
-        }).catchError((error) {
-          log('Failed to delete document: $error');
-        });
-      });
-    });
   }
 
   @override
@@ -223,7 +224,7 @@ class _DescriptionState extends State<Description> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey.shade900,
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SizedBox(
@@ -269,8 +270,8 @@ class _DescriptionState extends State<Description> {
                           child: modified_text(text: widget.name, size: 24),
                         ),
                       ),
-                      const Divider(
-                        color: Colors.black,
+                      Divider(
+                        color: Colors.blueGrey.shade900,
                       ),
                       widget.type == "tv"
                           ? const SizedBox(
@@ -281,8 +282,9 @@ class _DescriptionState extends State<Description> {
                               child: GestureDetector(
                                 child: Icon(
                                   Icons.bookmark,
-                                  color:
-                                      isBookmark ? Colors.green : Colors.grey,
+                                  color: isBookmark
+                                      ? Colors.blue.shade100
+                                      : Colors.grey,
                                   size: 30,
                                 ),
                                 onTap: () {
@@ -330,13 +332,13 @@ class _DescriptionState extends State<Description> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),
                                     border: Border.all(
-                                        color: Colors.green, width: 3)),
+                                        color: Colors.blue.shade100, width: 3)),
                                 child: modified_text(
                                     text: allGenresMap[genre] ?? 'Loading',
                                     size: 12),
                               ),
                             )
-                          // Chip(label: genre['name'],backgroundColor: Colors.black,),
+                          // Chip(label: genre['name'],backgroundColor: Colors.blueGrey.shade900,),
                         ],
                       ),
                     )
@@ -347,7 +349,7 @@ class _DescriptionState extends State<Description> {
                     ),
 
                   Container(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(top: 10, left: 10),
                     child: modified_text(
                         text: 'Releasing On - ${widget.launch_on}', size: 14),
                   ),
@@ -392,8 +394,8 @@ class _DescriptionState extends State<Description> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
-                          border: Border.all(color: Colors.green),
+                          color: Colors.blueGrey.shade900,
+                          border: Border.all(color: Colors.blue.shade100),
                         ),
                         child: ExpansionTile(
                           trailing: AnimatedSwitcher(
@@ -407,7 +409,7 @@ class _DescriptionState extends State<Description> {
                                 isCastExpanded
                                     ? Icons.keyboard_arrow_down_rounded
                                     : Icons.expand_less_rounded,
-                                color: Colors.green),
+                                color: Colors.blue.shade100),
                           ),
                           key: castExpansionTileKey,
                           iconColor: Colors.red,
@@ -495,8 +497,8 @@ class _DescriptionState extends State<Description> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
-                          border: Border.all(color: Colors.green),
+                          color: Colors.blueGrey.shade900,
+                          border: Border.all(color: Colors.blue.shade100),
                         ),
                         child: ExpansionTile(
                           trailing: AnimatedSwitcher(
@@ -510,7 +512,7 @@ class _DescriptionState extends State<Description> {
                                 isCastExpanded
                                     ? Icons.keyboard_arrow_down_rounded
                                     : Icons.expand_less_rounded,
-                                color: Colors.green),
+                                color: Colors.blue.shade100),
                           ),
                           key: similarExpansionTileKey,
                           iconColor: Colors.red,
@@ -618,8 +620,8 @@ class _DescriptionState extends State<Description> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
-                          border: Border.all(color: Colors.green),
+                          color: Colors.blueGrey.shade900,
+                          border: Border.all(color: Colors.blue.shade100),
                         ),
                         child: SizedBox(
                           child: ExpansionTile(
@@ -634,7 +636,7 @@ class _DescriptionState extends State<Description> {
                                   isReviewExpanded
                                       ? Icons.keyboard_arrow_down_rounded
                                       : Icons.expand_less_rounded,
-                                  color: Colors.green),
+                                  color: Colors.blue.shade100),
                             ),
                             key: reviewExpansionTileKey,
                             iconColor: Colors.red,

@@ -38,9 +38,15 @@ class _LandingPageState extends State<LandingPage> {
   List<dynamic> movies = [];
 
   Future<void> getGenres() async {
-    final response = await http.get(Uri.parse(
-        'https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey'));
-
+    String str =
+        'https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey';
+    var response;
+    if (cache.containsKey(str)) {
+      cache[str];
+    } else {
+      response = await http.get(Uri.parse(str));
+      cache[str] = response;
+    }
     if (response.statusCode == 200) {
       final jsonResult = jsonDecode(response.body);
       final List<dynamic> genresJson = jsonResult['genres'];
