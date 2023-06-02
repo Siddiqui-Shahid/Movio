@@ -106,10 +106,10 @@ class _DescriptionState extends State<Description> {
         .collection('movies')
         .where('id', isEqualTo: widget.id.toString().toLowerCase())
         .get();
-    log("snapshot.toString()");
-    log(snapshot.toString());
-    log("snapshot.size.toString()");
-    log(snapshot.size.toString());
+    // log("snapshot.toString()");
+    // log(snapshot.toString());
+    // log("snapshot.size.toString()");
+    // log(snapshot.size.toString());
     isBookmark = snapshot.size == 1;
     setState(() {
       isLoading = false;
